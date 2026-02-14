@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ride N Shine Auto Detailing</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #0b0f1a;
+      color: #ffffff;
+    }
+    header {
+      background: linear-gradient(90deg, #0066ff, #000000);
+      padding: 30px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: #d0d8ff;
+    }
+    nav {
+      background-color: #000000;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px 0;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #0066ff;
+    }
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .section-title {
+      color: #0066ff;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #0066ff;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    .card {
+      background-color: #111827;
+      border: 1px solid #1f2937;
+      padding: 25px;
+      border-radius: 10px;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #3b82f6;
+    }
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .cta {
+      background: linear-gradient(90deg, #000000, #0066ff);
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .cta h2 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+    }
+    .cta a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 15px 30px;
+      background-color: #000000;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 30px;
+      border: 2px solid #0066ff;
+    }
+    .cta a:hover {
+      background-color: #0066ff;
+    }
+    footer {
+      background-color: #000000;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Ride N Shine Auto Detailing</h1>
+    <p style="font-size:1.25rem; font-weight:bold">Mobile Interior & Exterior Car Detailing</p>
+    <p>We Come to You</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="about">
+    <h2 class="section-title">About Us</h2>
+    <p>
+      Ride N Shine Auto Detailing is a professional mobile detailing service dedicated to keeping your vehicle clean, protected, and looking its absolute best. We specialize in both interior and exterior detailing, offering flexible one-time and recurring wash plans designed to fit your lifestyle and budget.
+    </p>
+    <p>
+      Our goal is simple: deliver high-quality results with honest pricing and reliable service. We use safe, professional-grade products and proven techniques to protect your paint, wheels, upholstery, and interior surfaces. Every vehicle is treated with care and attention to detail, no matter the size or condition.
+    </p>
+    <p>
+      As a fully mobile service, we come directly to your home, workplace, or preferred location — saving you time and hassle. Whether you need a quick exterior refresh, a deep interior clean, or a complete inside-and-out detail, Ride N Shine is committed to providing a clean you can see and a service you can trust.
+    </p>
+
+    <h2 class="section-title" style="margin-top:40px">Why Choose Us</h2>
+    <div class="services">
+      <div class="card"><h3>🚐 100% Mobile Service</h3><p>We come to your home, work, or location of choice so you never have to wait in line or drive anywhere.</p></div>
+      <div class="card"><h3>🧼 Professional Results</h3><p>We use high-quality products and proven techniques to safely clean and protect your vehicle.</p></div>
+      <div class="card"><h3>💰 Honest Pricing</h3><p>Clear pricing with no hidden fees, plus weekly and monthly plans that save you money.</p></div>
+      <div class="card"><h3>⏱ Time-Saving Convenience</h3><p>Perfect for busy schedules — your car gets detailed while you focus on your day.</p></div>
+    </div>
+  </section>
+
+  <section id="services">
+    <h2 class="section-title">Our Services & Pricing</h2>
+
+    <h3 style="color:#3b82f6">Exterior Wash</h3>
+    <div class="services">
+      <div class="card"><h4>One-Time Wash</h4><p>Compact / Small – $25<br>Mid-Size / CUV – $30<br>Full-Size / SUV / Pickup – $35<br>Large Truck / Van / XL SUV – $40</p></div>
+      <div class="card"><h4>Weekly (4 Weeks)</h4><p>Compact / Small – $95 ($23.75/wash)<br>Mid-Size / CUV – $110 ($27.50/wash)<br>Full-Size / SUV / Pickup – $125 ($31.25/wash)<br>Large Truck / Van / XL SUV – $140 ($35/wash)</p></div>
+      <div class="card"><h4>Monthly (3 Months)</h4><p>Compact / Small – $70 ($23.33/wash)<br>Mid-Size / CUV – $85 ($28.33/wash)<br>Full-Size / SUV / Pickup – $100 ($33.33/wash)<br>Large Truck / Van / XL SUV – $120 ($40/wash)</p></div>
+    </div>
+
+    <h3 style="color:#3b82f6; margin-top:40px">Interior Detailing</h3>
+    <div class="services">
+      <div class="card"><h4>One-Time Wash</h4><p>Compact / Small – $50<br>Mid-Size / CUV – $60<br>Full-Size / SUV / Pickup – $70<br>Large Truck / Van / XL SUV – $80</p></div>
+      <div class="card"><h4>Weekly (4 Weeks)</h4><p>Compact / Small – $180 ($45/wash)<br>Mid-Size / CUV – $220 ($55/wash)<br>Full-Size / SUV / Pickup – $260 ($65/wash)<br>Large Truck / Van / XL SUV – $300 ($75/wash)</p></div>
+      <div class="card"><h4>Monthly (3 Months)</h4><p>Compact / Small – $140 ($46.66/wash)<br>Mid-Size / CUV – $175 ($58.33/wash)<br>Full-Size / SUV / Pickup – $200 ($66.66/wash)<br>Large Truck / Van / XL SUV – $230 ($76.66/wash)</p></div>
+    </div>
+
+    <h3 style="color:#3b82f6; margin-top:40px">Interior + Exterior</h3>
+    <div class="services">
+      <div class="card"><h4>One-Time Wash</h4><p>Compact / Small – $70<br>Mid-Size / CUV – $80<br>Full-Size / SUV / Pickup – $90<br>Large Truck / Van / XL SUV – $100</p></div>
+      <div class="card"><h4>Weekly (4 Weeks)</h4><p>Compact / Small – $275 ($68.75/wash)<br>Mid-Size / CUV – $315 ($78.75/wash)<br>Full-Size / SUV / Pickup – $355 ($88.75/wash)<br>Large Truck / Van / XL SUV – $395 ($98.97/wash)</p></div>
+      <div class="card"><h4>Monthly (3 Months)</h4><p>Compact / Small – $215 ($71.66/wash)<br>Mid-Size / CUV – $235 ($78.33/wash)<br>Full-Size / SUV / Pickup – $265 ($88.33/wash)<br>Large Truck / Van / XL SUV – $295 ($98.33/wash)</p></div>
+    </div>
+
+    <p style="margin-top:40px; font-weight:bold">🚐 Mobile Service – We Come to You!</p>
+    <p style="margin-top:10px; font-weight:bold; color:#3b82f6">📍 Serving Pickering and Nearby Cities (within a 20 km radius)</p>
+  </section>
+
+  <section class="cta" id="contact">
+    <h2>Book Your Detail Today</h2>
+    <p>Reliable • Affordable • Professional</p>
+    <a href="mailto:Ride'nshine@gmail.com?subject=Book%20My%20Detail">Book Now</a>
+  </section>
+
+  <footer>
+    <p>📧 Ride'nshine@gmail.com | 📸 Instagram: @Ride'nshine</p>
+    <p>© 2026 Ride N Shine Auto Detailing. Mobile Service Available.</p>
+  </footer>
+
+</body>
+</html>
