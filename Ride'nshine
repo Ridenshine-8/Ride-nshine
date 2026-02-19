@@ -1,183 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ride N Shine Auto Detailing</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #0b0f1a;
-      color: #ffffff;
-    }
-    header {
-      background: linear-gradient(90deg, #0066ff, #000000);
-      padding: 30px 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-    }
-    header p {
-      margin-top: 10px;
-      font-size: 1.1rem;
-      color: #d0d8ff;
-    }
-    nav {
-      background-color: #000000;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 15px 0;
-    }
-    nav a {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #0066ff;
-    }
-    section {
-      padding: 60px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    .section-title {
-      color: #0066ff;
-      font-size: 2rem;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #0066ff;
-      display: inline-block;
-      padding-bottom: 5px;
-    }
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-    .card {
-      background-color: #111827;
-      border: 1px solid #1f2937;
-      padding: 25px;
-      border-radius: 10px;
-    }
-    .card h3 {
-      margin-top: 0;
-      color: #3b82f6;
-    }
-    .card p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-    .cta {
-      background: linear-gradient(90deg, #000000, #0066ff);
-      text-align: center;
-      padding: 60px 20px;
-    }
-    .cta h2 {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
-    }
-    .cta a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 15px 30px;
-      background-color: #000000;
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 30px;
-      border: 2px solid #0066ff;
-    }
-    .cta a:hover {
-      background-color: #0066ff;
-    }
-    footer {
-      background-color: #000000;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ride N Shine | Premium Car Detailing</title>
+
+<!-- Google Fonts Fixed -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<style>
+body { font-family: 'Montserrat', sans-serif; background-color: #000; color: white; scroll-behavior: smooth; overflow-x: hidden; margin:0; padding:0; }
+.accent { color: #d6b07d; }
+
+/* HERO */
+.hero { height: 100vh; background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, #000 100%), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=3840') center/cover no-repeat; background-attachment: fixed; display:flex; justify-content:center; align-items:center; text-align:center; }
+.title { font-size: clamp(3rem, 7vw, 7rem); font-weight: 700; letter-spacing: 6px; text-transform: uppercase; position: relative; }
+.title::after { content: ""; position: absolute; left: 50%; bottom: -20px; transform: translateX(-50%); width: 120px; height: 3px; background: #d6b07d; }
+
+/* Service Cards */
+.service-card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); transition: all .4s ease; }
+.service-card:hover { transform: translateY(-10px); border-color: #d6b07d; box-shadow: 0 25px 60px rgba(214,176,125,0.2); }
+.service-card i { color: #d6b07d; }
+
+/* Social Cards */
+.glass { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); transition: all .4s ease; }
+.glass:hover { transform: translateY(-6px); }
+
+/* Buttons & Inputs */
+input, select { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.3); padding: 12px; border-radius: 8px; width: 100%; color: white; transition: .3s ease; }
+input:focus, select:focus { outline: none; border-color: #d6b07d; box-shadow: 0 0 15px rgba(214,176,125,0.3); }
+.btn-gold { background: #d6b07d; color: black; padding: 12px 24px; border-radius: 8px; font-weight: 600; transition: .3s ease; }
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(214,176,125,0.4); }
+
+/* Fade Animation */
+.fade-up { opacity: 0; transform: translateY(40px); transition: all .8s ease; }
+.fade-up.show { opacity: 1; transform: translateY(0); }
+
+/* Card */
+.card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); border-radius: 12px; padding: 20px; }
+
+/* CART POPUP FIX */
+#cartPanel {
+  position: fixed;
+  top: 0; right: 0;
+  width: 96%;
+  max-width: 400px;
+  max-height: 100vh;
+  background: #111;
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
+  overflow-y: auto;
+  padding: 24px;
+  z-index: 50;
+  box-shadow: -4px 0 20px rgba(214,176,125,0.4);
+  display: flex;
+  flex-direction: column;
+}
+#cartPanel button { background: none; border: none; font-size: 2rem; color: #d6b07d; cursor: pointer; margin-bottom:16px; }
+#cartPanel h3 { margin-bottom: 16px; text-align:center; }
+#cartPanel select, #cartPanel input, #cartPanel button { margin-bottom: 16px; }
+
+/* Cart Tab Icon */
+#cartTabIcon { position: fixed; bottom: 24px; right: 24px; background: #d6b07d; padding: 16px; border-radius: 50%; cursor: pointer; z-index:50; display:flex; justify-content:center; align-items:center; }
+
+/* About Section Grid */
+.about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 60px 10px; max-width: 1200px; margin: auto; }
+.about-section img { width: 100%; border-radius: 12px; object-fit: cover; }
+
+/* Gold Gradient Full Bottom */
+.bottom-gradient { position: absolute; bottom: 0; width: 100%; height: 400px; background: linear-gradient(to top, #d6b07d 0%, rgba(214,176,125,0.5) 30%, transparent 100%); pointer-events: none; }
+
+/* Footer Grey */
+footer p { color: #555; }
+
+@media(max-width:768px){ 
+  .about-section { grid-template-columns: 1fr; gap: 20px; } 
+}
+</style>
 </head>
-<body>
 
-  <header>
-    <h1>Ride N Shine Auto Detailing</h1>
-    <p style="font-size:1.25rem; font-weight:bold">Mobile Interior & Exterior Car Detailing</p>
-    <p>We Come to You</p>
-  </header>
+<body class="px-6 py-12 relative">
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <h1 class="title">Ride N Shine</h1>
+        <p class="mt-8 text-xl tracking-widest">Premium Auto Detailing</p>
+        <div id="cartTabIcon"><i class="fa-solid fa-cart-shopping text-black text-2xl"></i></div>
+    </div>
+</section>
 
-  <section id="about">
-    <h2 class="section-title">About Us</h2>
-    <p>
-      Ride N Shine Auto Detailing is a professional mobile detailing service dedicated to keeping your vehicle clean, protected, and looking its absolute best. We specialize in both interior and exterior detailing, offering flexible one-time and recurring wash plans designed to fit your lifestyle and budget.
+<!-- SERVICES -->
+<section class="py-36 px-10 text-center">
+<h2 class="text-4xl accent mb-20 fade-up">Our Services</h2>
+<div class="grid md:grid-cols-4 gap-10 max-w-7xl mx-auto">
+
+<div class="service-card p-10 rounded-2xl text-center fade-up">
+<i class="fa-solid fa-car text-5xl mb-6"></i>
+<h3 class="text-xl font-semibold mb-4">Exterior Wash</h3>
+<p class="text-gray-400">Precision foam wash, wheel restoration and flawless finish.</p>
+</div>
+
+<div class="service-card p-10 rounded-2xl text-center fade-up">
+<i class="fa-solid fa-couch text-5xl mb-6"></i>
+<h3 class="text-xl font-semibold mb-4">Interior Wash</h3>
+<p class="text-gray-400">Deep vacuum, steam sanitation and interior refinement.</p>
+</div>
+
+<div class="service-card p-10 rounded-2xl text-center fade-up">
+<i class="fa-solid fa-spray-can-sparkles text-5xl mb-6"></i>
+<h3 class="text-xl font-semibold mb-4">Detailing</h3>
+<p class="text-gray-400">Complete restoration bringing vehicles to showroom condition.</p>
+</div>
+
+<div class="service-card p-10 rounded-2xl text-center fade-up">
+<i class="fa-solid fa-hand-sparkles text-5xl mb-6"></i>
+<h3 class="text-xl font-semibold mb-4">Hand Dry</h3>
+<p class="text-gray-400">Microfiber precision drying to eliminate swirl marks.</p>
+</div>
+
+</div>
+</section>
+
+<!-- ABOUT + PHOTO -->
+<section class="about-section bg-black fade-up relative">
+  <div>
+    <h2 class="text-4xl accent mb-6">About Ride N Shine</h2>
+    <p class="text-gray-300 text-lg leading-relaxed">
+      Ride N Shine is built on discipline, craftsmanship, and attention to detail. Every vehicle is treated with precision care and a commitment to excellence. We elevate your vehicle beyond a simple wash — we deliver a transformation that you can see and feel.
     </p>
-    <p>
-      Our goal is simple: deliver high-quality results with honest pricing and reliable service. We use safe, professional-grade products and proven techniques to protect your paint, wheels, upholstery, and interior surfaces. Every vehicle is treated with care and attention to detail, no matter the size or condition.
-    </p>
-    <p>
-      As a fully mobile service, we come directly to your home, workplace, or preferred location — saving you time and hassle. Whether you need a quick exterior refresh, a deep interior clean, or a complete inside-and-out detail, Ride N Shine is committed to providing a clean you can see and a service you can trust.
-    </p>
+  </div>
+  <div>
+    <!-- Working image added -->
+    <img src="https://images.unsplash.com/photo-1605437241278-c1806d14a4d9?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyJTIwZGV0YWlsaW5nfGVufDB8fDB8fHww" alt="Car Detailing" class="rounded-2xl object-cover w-full">
+  </div>
+</section>
 
-    <h2 class="section-title" style="margin-top:40px">Why Choose Us</h2>
-    <div class="services">
-      <div class="card"><h3>🚐 100% Mobile Service</h3><p>We come to your home, work, or location of choice so you never have to wait in line or drive anywhere.</p></div>
-      <div class="card"><h3>🧼 Professional Results</h3><p>We use high-quality products and proven techniques to safely clean and protect your vehicle.</p></div>
-      <div class="card"><h3>💰 Honest Pricing</h3><p>Clear pricing with no hidden fees, plus weekly and monthly plans that save you money.</p></div>
-      <div class="card"><h3>⏱ Time-Saving Convenience</h3><p>Perfect for busy schedules — your car gets detailed while you focus on your day.</p></div>
-    </div>
-  </section>
+<!-- Gradient -->
+<div class="bottom-gradient"></div>
 
-  <section id="services">
-    <h2 class="section-title">Our Services & Pricing</h2>
+<!-- SOCIALS -->
+<section class="py-32 px-10 text-center bg-black">
+<h2 class="text-4xl accent mb-16 fade-up">Connect With Us</h2>
+<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto fade-up">
+<a href="https://facebook.com" class="glass p-10 rounded-2xl hover:bg-blue-600 transition duration-500">
+<i class="fab fa-facebook text-4xl mb-4"></i>
+<p class="font-bold">ridenshine 07</p></a>
+<a href="mailto:ridenshine07@gmail.com" class="glass p-10 rounded-2xl hover:bg-gray-100 hover:text-black transition duration-500">
+<i class="fa-solid fa-envelope text-4xl mb-4"></i>
+<p class="font-bold">Email Us</p></a>
+<a href="https://instagram.com" class="glass p-10 rounded-2xl hover:bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 transition duration-500">
+<i class="fab fa-instagram text-4xl mb-4"></i>
+<p class="font-bold">@ridenshine07</p></a>
+</div>
+</section>
 
-    <h3 style="color:#3b82f6">Exterior Wash</h3>
-    <div class="services">
-      <div class="card"><h4>One-Time Wash</h4><p>Compact / Small – $25<br>Mid-Size / CUV – $30<br>Full-Size / SUV / Pickup – $35<br>Large Truck / Van / XL SUV – $40</p></div>
-      <div class="card"><h4>Weekly (4 Weeks)</h4><p>Compact / Small – $95 ($23.75/wash)<br>Mid-Size / CUV – $110 ($27.50/wash)<br>Full-Size / SUV / Pickup – $125 ($31.25/wash)<br>Large Truck / Van / XL SUV – $140 ($35/wash)</p></div>
-      <div class="card"><h4>Monthly (3 Months)</h4><p>Compact / Small – $70 ($23.33/wash)<br>Mid-Size / CUV – $85 ($28.33/wash)<br>Full-Size / SUV / Pickup – $100 ($33.33/wash)<br>Large Truck / Van / XL SUV – $120 ($40/wash)</p></div>
-    </div>
+<footer class="py-10 text-center border-t border-gray-800">
+<p>© 2026 Ride N Shine</p>
+</footer>
 
-    <h3 style="color:#3b82f6; margin-top:40px">Interior Detailing</h3>
-    <div class="services">
-      <div class="card"><h4>One-Time Wash</h4><p>Compact / Small – $50<br>Mid-Size / CUV – $60<br>Full-Size / SUV / Pickup – $70<br>Large Truck / Van / XL SUV – $80</p></div>
-      <div class="card"><h4>Weekly (4 Weeks)</h4><p>Compact / Small – $180 ($45/wash)<br>Mid-Size / CUV – $220 ($55/wash)<br>Full-Size / SUV / Pickup – $260 ($65/wash)<br>Large Truck / Van / XL SUV – $300 ($75/wash)</p></div>
-      <div class="card"><h4>Monthly (3 Months)</h4><p>Compact / Small – $140 ($46.66/wash)<br>Mid-Size / CUV – $175 ($58.33/wash)<br>Full-Size / SUV / Pickup – $200 ($66.66/wash)<br>Large Truck / Van / XL SUV – $230 ($76.66/wash)</p></div>
-    </div>
+<!-- CART POPUP -->
+<div id="cartPanel">
+  <button id="closeCart">&times;</button>
+  <h3 class="text-2xl font-semibold accent">Your Cart & Booking</h3>
 
-    <h3 style="color:#3b82f6; margin-top:40px">Interior + Exterior</h3>
-    <div class="services">
-      <div class="card"><h4>One-Time Wash</h4><p>Compact / Small – $70<br>Mid-Size / CUV – $80<br>Full-Size / SUV / Pickup – $90<br>Large Truck / Van / XL SUV – $100</p></div>
-      <div class="card"><h4>Weekly (4 Weeks)</h4><p>Compact / Small – $275 ($68.75/wash)<br>Mid-Size / CUV – $315 ($78.75/wash)<br>Full-Size / SUV / Pickup – $355 ($88.75/wash)<br>Large Truck / Van / XL SUV – $395 ($98.97/wash)</p></div>
-      <div class="card"><h4>Monthly (3 Months)</h4><p>Compact / Small – $215 ($71.66/wash)<br>Mid-Size / CUV – $235 ($78.33/wash)<br>Full-Size / SUV / Pickup – $265 ($88.33/wash)<br>Large Truck / Van / XL SUV – $295 ($98.33/wash)</p></div>
-    </div>
+  <div class="card mb-6">
+    <select id="package">
+      <option value="">Select Service</option>
+      <option value="exterior">Exterior Wash</option>
+      <option value="interior">Interior Wash</option>
+      <option value="combo">Interior & Exterior</option>
+    </select>
+    <select id="plan">
+      <option value="">Select Plan</option>
+      <option value="one">One Time</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+    </select>
+    <select id="size">
+      <option value="">Vehicle Size</option>
+      <option value="compact">Compact / Small</option>
+      <option value="mid">Mid-Size / CUV</option>
+      <option value="full">Full-Size / SUV / Pickup</option>
+      <option value="large">Large Truck / Van / XL SUV</option>
+    </select>
+    <button id="addCartBtn" class="btn-gold w-full">Add to Cart</button>
+    <div class="mt-4 text-xl text-center">Total: <span id="totalInline" class="accent">$0</span></div>
+  </div>
 
-    <p style="margin-top:40px; font-weight:bold">🚐 Mobile Service – We Come to You!</p>
-    <p style="margin-top:10px; font-weight:bold; color:#3b82f6">📍 Serving Pickering and Nearby Cities (within a 20 km radius)</p>
-  </section>
+  <ul id="cartItemsPopup" class="mb-6 space-y-2"></ul>
 
-  <section class="cta" id="contact">
-    <h2>Book Your Detail Today</h2>
-    <p>Reliable • Affordable • Professional</p>
-    <a href="mailto:Ride'nshine@gmail.com?subject=Book%20My%20Detail">Book Now</a>
-  </section>
+  <form id="bookingForm" class="space-y-4">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email Address" required>
+    <input type="text" id="phone" placeholder="Phone Number" required>
+    <button type="submit" class="w-full btn-gold">Submit Booking</button>
+  </form>
+  <div id="success" class="hidden text-green-400 mt-4 text-center">Booking sent successfully!</div>
+</div>
 
-  <footer>
-    <p>📧 Ride'nshine@gmail.com | 📸 Instagram: @Ride'nshine</p>
-    <p>© 2026 Ride N Shine Auto Detailing. Mobile Service Available.</p>
-  </footer>
+<script>
+emailjs.init("YOUR_PUBLIC_KEY");
 
+const prices = {
+  exterior: { one:{compact:25,mid:30,full:35,large:40}, weekly:{compact:95,mid:110,full:125,large:140}, monthly:{compact:70,mid:85,full:100,large:120} },
+  interior: { one:{compact:50,mid:60,full:70,large:80}, weekly:{compact:180,mid:220,full:260,large:300}, monthly:{compact:140,mid:175,full:200,large:230} },
+  combo: { one:{compact:70,mid:80,full:90,large:100}, weekly:{compact:275,mid:315,full:355,large:395}, monthly:{compact:215,mid:235,full:265,large:295} }
+};
+
+let cart = [];
+let total = 0;
+
+document.getElementById('addCartBtn').addEventListener('click', ()=>{
+  const pkg=document.getElementById('package').value;
+  const plan=document.getElementById('plan').value;
+  const size=document.getElementById('size').value;
+  if(!pkg||!plan||!size) return alert("Select all options");
+  const price=prices[pkg][plan][size];
+  cart.push({pkg,plan,size,price});
+  total+=price;
+  document.getElementById('totalInline').innerText=`$${total}`;
+  const li=document.createElement('li');
+  li.textContent=`${pkg} - ${plan} - ${size}: $${price}`;
+  li.className="text-gray-300";
+  document.getElementById('cartItemsPopup').appendChild(li);
+});
+
+document.getElementById('cartTabIcon').addEventListener('click', ()=>document.getElementById('cartPanel').style.transform='translateX(0)');
+document.getElementById('closeCart').addEventListener('click', ()=>document.getElementById('cartPanel').style.transform='translateX(100%)');
+
+document.getElementById("bookingForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  if(cart.length===0) return alert("Add a service to cart first.");
+  const templateParams={
+    name:document.getElementById('name').value,
+    email:document.getElementById('email').value,
+    phone:document.getElementById('phone').value,
+    services:JSON.stringify(cart),
+    total:total
+  };
+  emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",templateParams)
+    .then(()=>{
+      document.getElementById("success").classList.remove("hidden");
+      cart=[]; total=0;
+      document.getElementById('cartItemsPopup').innerHTML='';
+      document.getElementById('totalInline').innerText="$0";
+      this.reset();
+    })
+    .catch(()=>alert("Failed to send booking."));
+});
+
+const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');}})},{threshold:0.2});
+document.querySelectorAll('.fade-up').forEach(el=>fadeObserver.observe(el));
+</script>
 </body>
 </html>
+
+
