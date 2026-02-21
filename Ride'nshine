@@ -5,256 +5,468 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ride N Shine | Premium Car Detailing</title>
 
-<!-- Google Fonts Fixed -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
 body { font-family: 'Montserrat', sans-serif; background-color: #000; color: white; scroll-behavior: smooth; overflow-x: hidden; margin:0; padding:0; }
-.accent { color: #d6b07d; }
+.accent { color: #d6b07d !important; }
 
-/* HERO */
-.hero { height: 100vh; background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, #000 100%), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=3840') center/cover no-repeat; background-attachment: fixed; display:flex; justify-content:center; align-items:center; text-align:center; }
+/* STICKY HEADER SYSTEM */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* NAVIGATION */
+nav { 
+    background: rgba(0,0,0,0.95); 
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(214,176,125,0.2); 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+.nav-container { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 2rem; }
+.nav-link { cursor: pointer; transition: 0.3s; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; color: #666; }
+.nav-link.active-tab { color: #d6b07d !important; }
+.nav-link:hover { color: #d6b07d; }
+
+/* THINNER FIXED MARQUEE */
+.marquee-bar { 
+    background: #1a1a1a; 
+    border-bottom: 1px solid rgba(214,176,125,0.3); 
+    padding: 8px 0; 
+    overflow: hidden; 
+    width: 100%; 
+    position: relative; 
+    z-index: 50; 
+}
+.marquee-content { display: flex; white-space: nowrap; animation: scrollMarquee 15s linear infinite; }
+.marquee-item { display: flex; align-items: center; color: #d6b07d; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.65rem; margin: 0 45px; }
+.marquee-item i { margin-right: 8px; font-size: 0.75rem; }
+@keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* HERO SECTIONS */
+.hero { height: 100vh; background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, #000 100%), url('https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?q=80&w=3840') center/cover no-repeat; background-attachment: fixed; display:flex; justify-content:center; align-items:center; text-align:center; }
+.hero-standard { height: 60vh; background: linear-gradient(to bottom, rgba(0,0,0,0.4), #000), url('https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=3840') center/cover no-repeat; display:flex; justify-content:center; align-items:center; text-align:center; }
 .title { font-size: clamp(3rem, 7vw, 7rem); font-weight: 700; letter-spacing: 6px; text-transform: uppercase; position: relative; }
 .title::after { content: ""; position: absolute; left: 50%; bottom: -20px; transform: translateX(-50%); width: 120px; height: 3px; background: #d6b07d; }
 
-/* Service Cards */
-.service-card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); transition: all .4s ease; }
-.service-card:hover { transform: translateY(-10px); border-color: #d6b07d; box-shadow: 0 25px 60px rgba(214,176,125,0.2); }
-.service-card i { color: #d6b07d; }
+/* PADDING FOR CONTENT */
+.page-content { transition: opacity 0.5s ease; padding-bottom: 100px; padding-top: 130px; }
+#homePage { padding-top: 0; }
 
-/* Social Cards */
-.glass { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); transition: all .4s ease; }
-.glass:hover { transform: translateY(-6px); }
+/* PRICING & SMOOTH HOVERS */
+.price-card, .service-card, .glass, .review-card, .size-detail-card { transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) !important; }
+.price-card:hover, .service-card:hover, .review-card:hover, .size-detail-card:hover { transform: translateY(-12px); border-color: #d6b07d; box-shadow: 0 30px 70px rgba(214,176,125,0.25); }
+.price-card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); border-radius: 20px; padding: 50px 0; position: relative; overflow: hidden; min-height: 400px; display: flex; flex-direction: column; justify-content: center; }
+.price-card h3 { font-size: 1.6rem; margin-bottom: 25px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.price-card ul { text-align: left; line-height: 2.2; font-size: 1.1rem; padding: 0 40px;}
+.badge { position: absolute; top: 25px; right: -45px; background: #d6b07d; color: black; padding: 8px 45px; transform: rotate(45deg); font-size: 0.8rem; font-weight: 900; text-transform: uppercase; }
 
-/* Buttons & Inputs */
-input, select { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.3); padding: 12px; border-radius: 8px; width: 100%; color: white; transition: .3s ease; }
-input:focus, select:focus { outline: none; border-color: #d6b07d; box-shadow: 0 0 15px rgba(214,176,125,0.3); }
-.btn-gold { background: #d6b07d; color: black; padding: 12px 24px; border-radius: 8px; font-weight: 600; transition: .3s ease; }
+.service-card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); padding: 50px !important; }
+
+/* SIZE GUIDE RESTORED */
+.size-detail-card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); border-radius: 20px; padding: 40px; text-align: center; }
+.size-icon-display { font-size: 5rem; color: #d6b07d; margin-bottom: 20px; display: block; filter: drop-shadow(0 0 15px rgba(214,176,125,0.3)); }
+
+/* REVIEWS & FAQ */
+.review-card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.1); border-radius: 24px; padding: 30px; position: relative; }
+.delete-btn { background: #ff4444; color: white; padding: 4px 10px; border-radius: 5px; font-size: 0.7rem; cursor: pointer; position: absolute; top: 10px; right: 10px; display: none; }
+.admin-mode .delete-btn { display: block; }
+
+.faq-item { background: transparent; border: 1px solid rgba(214,176,125,0.1); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; transition: 0.3s; }
+.faq-item:hover { border-color: #d6b07d; }
+.faq-question { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; text-align: left; }
+.faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; color: #999; line-height: 1.6; text-align: left; }
+.faq-item.active .faq-answer { padding: 0 20px 20px 20px; }
+.faq-item.active i { transform: rotate(180deg); color: #d6b07d; }
+
+.glass { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); }
+input, select, textarea { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.3); padding: 12px; border-radius: 8px; width: 100%; color: white; transition: .3s ease; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: #d6b07d; box-shadow: 0 0 15px rgba(214,176,125,0.3); }
+.btn-gold { background: #d6b07d; color: black; padding: 12px 24px; border-radius: 8px; font-weight: 600; transition: .3s ease; cursor: pointer; display: inline-block; }
 .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(214,176,125,0.4); }
 
-/* Fade Animation */
-.fade-up { opacity: 0; transform: translateY(40px); transition: all .8s ease; }
+.fade-up { opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
 .fade-up.show { opacity: 1; transform: translateY(0); }
 
-/* Card */
-.card { background: #0c0c0c; border: 1px solid rgba(214,176,125,0.2); border-radius: 12px; padding: 20px; }
+.hidden-page { display: none; }
 
-/* CART POPUP FIX */
-#cartPanel {
-  position: fixed;
-  top: 0; right: 0;
-  width: 96%;
-  max-width: 400px;
-  max-height: 100vh;
-  background: #111;
-  transform: translateX(100%);
-  transition: transform 0.4s ease;
-  overflow-y: auto;
-  padding: 24px;
-  z-index: 50;
-  box-shadow: -4px 0 20px rgba(214,176,125,0.4);
-  display: flex;
-  flex-direction: column;
-}
-#cartPanel button { background: none; border: none; font-size: 2rem; color: #d6b07d; cursor: pointer; margin-bottom:16px; }
-#cartPanel h3 { margin-bottom: 16px; text-align:center; }
-#cartPanel select, #cartPanel input, #cartPanel button { margin-bottom: 16px; }
-
-/* Cart Tab Icon */
-#cartTabIcon { position: fixed; bottom: 24px; right: 24px; background: #d6b07d; padding: 16px; border-radius: 50%; cursor: pointer; z-index:50; display:flex; justify-content:center; align-items:center; }
-
-/* About Section Grid */
+#cartPanel { position: fixed; top: 0; right: 0; width: 96%; max-width: 450px; height: 100vh; background: #111; transform: translateX(100%); transition: transform 0.4s ease; overflow-y: auto; padding: 24px; z-index: 1500; box-shadow: -4px 0 20px rgba(214,176,125,0.4); display: flex; flex-direction: column; }
 .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 60px 10px; max-width: 1200px; margin: auto; }
 .about-section img { width: 100%; border-radius: 12px; object-fit: cover; }
-
-/* Gold Gradient Full Bottom */
-.bottom-gradient { position: absolute; bottom: 0; width: 100%; height: 400px; background: linear-gradient(to top, #d6b07d 0%, rgba(214,176,125,0.5) 30%, transparent 100%); pointer-events: none; }
-
-/* Footer Grey */
-footer p { color: #555; }
+.bottom-gradient { position: fixed; bottom: 0; left: 0; width: 100%; height: 300px; background: linear-gradient(to top, rgba(214,176,125,0.4) 0%, rgba(214,176,125,0.1) 40%, transparent 100%); pointer-events: none; z-index: -1; }
+footer { position: relative; z-index: 10; background: transparent; }
+.easter-egg { opacity: 0.05; transition: 0.5s; cursor: help; padding: 10px; font-size: 0.7rem; color: #333; }
+.easter-egg:hover { opacity: 1; color: #d6b07d; text-shadow: 0 0 8px #d6b07d; }
 
 @media(max-width:768px){ 
-  .about-section { grid-template-columns: 1fr; gap: 20px; } 
+    .about-section { grid-template-columns: 1fr; gap: 20px; } 
+    .nav-container { display: flex; gap: 0.8rem; position: static; transform: none; flex-wrap: wrap; justify-content: center; margin: 10px 0; }
+    nav { flex-direction: column; padding: 15px 10px; }
+    .nav-link { font-size: 0.65rem; }
+    .page-content { padding-top: 190px; }
 }
 </style>
 </head>
 
-<body class="px-6 py-12 relative">
-
-<!-- HERO -->
-<section class="hero">
-    <div>
-        <h1 class="title">Ride N Shine</h1>
-        <p class="mt-8 text-xl tracking-widest">Premium Auto Detailing</p>
-        <div id="cartTabIcon"><i class="fa-solid fa-cart-shopping text-black text-2xl"></i></div>
-    </div>
-</section>
-
-<!-- SERVICES -->
-<section class="py-36 px-10 text-center">
-<h2 class="text-4xl accent mb-20 fade-up">Our Services</h2>
-<div class="grid md:grid-cols-4 gap-10 max-w-7xl mx-auto">
-
-<div class="service-card p-10 rounded-2xl text-center fade-up">
-<i class="fa-solid fa-car text-5xl mb-6"></i>
-<h3 class="text-xl font-semibold mb-4">Exterior Wash</h3>
-<p class="text-gray-400">Precision foam wash, wheel restoration and flawless finish.</p>
-</div>
-
-<div class="service-card p-10 rounded-2xl text-center fade-up">
-<i class="fa-solid fa-couch text-5xl mb-6"></i>
-<h3 class="text-xl font-semibold mb-4">Interior Wash</h3>
-<p class="text-gray-400">Deep vacuum, steam sanitation and interior refinement.</p>
-</div>
-
-<div class="service-card p-10 rounded-2xl text-center fade-up">
-<i class="fa-solid fa-spray-can-sparkles text-5xl mb-6"></i>
-<h3 class="text-xl font-semibold mb-4">Detailing</h3>
-<p class="text-gray-400">Complete restoration bringing vehicles to showroom condition.</p>
-</div>
-
-<div class="service-card p-10 rounded-2xl text-center fade-up">
-<i class="fa-solid fa-hand-sparkles text-5xl mb-6"></i>
-<h3 class="text-xl font-semibold mb-4">Hand Dry</h3>
-<p class="text-gray-400">Microfiber precision drying to eliminate swirl marks.</p>
-</div>
-
-</div>
-</section>
-
-<!-- ABOUT + PHOTO -->
-<section class="about-section bg-black fade-up relative">
-  <div>
-    <h2 class="text-4xl accent mb-6">About Ride N Shine</h2>
-    <p class="text-gray-300 text-lg leading-relaxed">
-      Ride N Shine is built on discipline, craftsmanship, and attention to detail. Every vehicle is treated with precision care and a commitment to excellence. We elevate your vehicle beyond a simple wash — we deliver a transformation that you can see and feel.
-    </p>
-  </div>
-  <div>
-    <!-- Working image added -->
-    <img src="https://images.unsplash.com/photo-1605437241278-c1806d14a4d9?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyJTIwZGV0YWlsaW5nfGVufDB8fDB8fHww" alt="Car Detailing" class="rounded-2xl object-cover w-full">
-  </div>
-</section>
-
-<!-- Gradient -->
+<body>
 <div class="bottom-gradient"></div>
 
-<!-- SOCIALS -->
-<section class="py-32 px-10 text-center bg-black">
-<h2 class="text-4xl accent mb-16 fade-up">Connect With Us</h2>
-<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto fade-up">
-<a href="https://facebook.com" class="glass p-10 rounded-2xl hover:bg-blue-600 transition duration-500">
-<i class="fab fa-facebook text-4xl mb-4"></i>
-<p class="font-bold">ridenshine 07</p></a>
-<a href="mailto:ridenshine07@gmail.com" class="glass p-10 rounded-2xl hover:bg-gray-100 hover:text-black transition duration-500">
-<i class="fa-solid fa-envelope text-4xl mb-4"></i>
-<p class="font-bold">Email Us</p></a>
-<a href="https://instagram.com" class="glass p-10 rounded-2xl hover:bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 transition duration-500">
-<i class="fab fa-instagram text-4xl mb-4"></i>
-<p class="font-bold">@ridenshine07</p></a>
+<header>
+    <nav class="px-8 py-5">
+        <div onclick="showPage('home')" class="text-xl font-bold accent tracking-tighter cursor-pointer">RIDE N SHINE</div>
+        <div class="nav-container">
+            <span onclick="showPage('home')" id="nav-home" class="nav-link active-tab">Home</span>
+            <span onclick="showPage('pricing')" id="nav-pricing" class="nav-link">Pricing</span>
+            <span onclick="showPage('reviews')" id="nav-reviews" class="nav-link">Reviews</span>
+            <span onclick="showPage('faq')" id="nav-faq" class="nav-link">FAQ</span>
+            <span onclick="showPage('booking')" id="nav-booking" class="nav-link">Booking</span>
+            <span onclick="showPage('sizeguide')" id="nav-sizeguide" class="nav-link">Size Guide</span>
+        </div>
+        <div onclick="toggleCart(true)" class="cursor-pointer text-white hover:text-gold"><i class="fa-solid fa-cart-shopping text-xl"></i></div>
+    </nav>
+
+    <div class="marquee-bar">
+        <div class="marquee-content">
+            <div class="marquee-item"><i class="fa-solid fa-crown"></i> Elite Detailing</div>
+            <div class="marquee-item"><i class="fa-solid fa-star"></i> 5-Star Rated Service</div>
+            <div class="marquee-item"><i class="fa-solid fa-location-dot"></i> We Come To You</div>
+            <div class="marquee-item"><i class="fa-solid fa-shield-halved"></i> Pro Paint Protection</div>
+            <div class="marquee-item"><i class="fa-solid fa-gem"></i> Showroom Finish</div>
+            <div class="marquee-item"><i class="fa-solid fa-clock"></i> On-Time Guarantee</div>
+            <div class="marquee-item"><i class="fa-solid fa-crown"></i> Elite Detailing</div>
+            <div class="marquee-item"><i class="fa-solid fa-star"></i> 5-Star Rated Service</div>
+            <div class="marquee-item"><i class="fa-solid fa-location-dot"></i> We Come To You</div>
+            <div class="marquee-item"><i class="fa-solid fa-shield-halved"></i> Pro Paint Protection</div>
+            <div class="marquee-item"><i class="fa-solid fa-gem"></i> Showroom Finish</div>
+            <div class="marquee-item"><i class="fa-solid fa-clock"></i> On-Time Guarantee</div>
+        </div>
+    </div>
+</header>
+
+<div id="homePage" class="page-content">
+    <section class="hero"><div class="fade-up"><h1 class="title">Ride N Shine</h1><p class="mt-8 text-xl tracking-widest">Premium Auto Detailing</p></div></section>
+    <section class="py-36 px-10 text-center">
+        <h2 class="text-4xl accent mb-20 fade-up">Our Services</h2>
+        <div class="grid md:grid-cols-4 gap-10 max-w-7xl mx-auto">
+            <div class="service-card p-10 rounded-2xl fade-up"><i class="fa-solid fa-car text-5xl mb-6 accent"></i><h3 class="text-xl font-bold mb-4">Exterior Wash</h3><p class="text-gray-400">Precision foam wash, wheel restoration and flawless finish.</p></div>
+            <div class="service-card p-10 rounded-2xl fade-up"><i class="fa-solid fa-couch text-5xl mb-6 accent"></i><h3 class="text-xl font-bold mb-4">Interior Wash</h3><p class="text-gray-400">Deep vacuum, steam sanitation and interior refinement.</p></div>
+            <div class="service-card p-10 rounded-2xl fade-up"><i class="fa-solid fa-spray-can-sparkles text-5xl mb-6 accent"></i><h3 class="text-xl font-bold mb-4">Detailing</h3><p class="text-gray-400">Complete restoration bringing vehicles to showroom condition.</p></div>
+            <div class="service-card p-10 rounded-2xl fade-up"><i class="fa-solid fa-hand-sparkles text-5xl mb-6 accent"></i><h3 class="text-xl font-bold mb-4">Hand Dry</h3><p class="text-gray-400">Microfiber precision drying to eliminate swirl marks.</p></div>
+        </div>
+    </section>
+    <section class="about-section bg-black fade-up relative">
+        <div><h2 class="text-4xl accent mb-6 font-bold">About Ride N Shine</h2><p class="text-gray-300 text-lg leading-relaxed">Ride N Shine is built on discipline, craftsmanship, and attention to detail. Every vehicle is treated with precision care and a commitment to excellence. We deliver a transformation that you can see and feel.</p></div>
+        <div><img src="https://images.unsplash.com/photo-1605437241278-c1806d14a4d9?w=400" class="rounded-2xl"></div>
+    </section>
+    <section class="py-32 px-10 text-center bg-black">
+        <h2 class="text-4xl accent mb-16 fade-up font-bold">Connect With Us</h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto fade-up">
+            <a href="https://wa.me/16472620610" target="_blank" class="glass p-10 rounded-2xl hover:bg-green-600">
+                <i class="fab fa-whatsapp text-4xl mb-4"></i><p class="font-bold">WhatsApp</p>
+            </a>
+            <a href="mailto:ridenshine07@gmail.com" class="glass p-10 rounded-2xl hover:bg-white hover:text-black">
+                <i class="fa-solid fa-envelope text-4xl mb-4"></i><p class="font-bold">Email Us</p>
+            </a>
+            <a href="https://www.instagram.com/ridenshine07_?igsh=MXBzOWtnc3pxYXJtbg%3D%3D&utm_source=qr" target="_blank" class="glass p-10 rounded-2xl hover:bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600">
+                <i class="fab fa-instagram text-4xl mb-4"></i><p class="font-bold">Instagram</p>
+            </a>
+        </div>
+    </section>
 </div>
-</section>
 
-<footer class="py-10 text-center border-t border-gray-800">
-<p>© 2026 Ride N Shine</p>
-</footer>
+<div id="pricingPage" class="page-content hidden-page">
+    <section class="hero-standard"><div class="fade-up"><h1 class="title">Pricing & Packages</h1></div></section>
+    <div class="max-w-7xl mx-auto px-6 py-20">
+        <button onclick="showPage('home')" class="text-gray-500 hover:text-white transition flex items-center gap-2 mb-10"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        
+        <section class="py-20 text-center">
+            <h2 class="text-5xl accent mb-20 fade-up font-bold">Exterior Wash</h2>
+            <div class="grid md:grid-cols-3 gap-16">
+                <div class="price-card"><h3>One Time</h3><ul><li>Compact – $25</li><li>Mid-Size – $30</li><li>Full-Size – $35</li><li>Large – $40</li></ul></div>
+                <div class="price-card"><div class="badge">Weekly Rate</div><h3>Weekly (4 Weeks)</h3><ul><li>Compact – $95</li><li>Mid-Size – $110</li><li>Full-Size – $125</li><li>Large – $140</li></ul></div>
+                <div class="price-card"><h3>Monthly (3 Months)</h3><ul><li>Compact – $70</li><li>Mid-Size – $85</li><li>Full-Size – $100</li><li>Large – $120</li></ul></div>
+            </div>
+        </section>
 
-<!-- CART POPUP -->
+        <section class="py-20 text-center">
+            <h2 class="text-5xl accent mb-20 fade-up font-bold">Interior Wash</h2>
+            <div class="grid md:grid-cols-3 gap-16">
+                <div class="price-card"><h3>One Time</h3><ul><li>Compact – $50</li><li>Mid-Size – $60</li><li>Full-Size – $70</li><li>Large – $80</li></ul></div>
+                <div class="price-card"><h3>Weekly (4 Weeks)</h3><ul><li>Compact – $180</li><li>Mid-Size – $220</li><li>Full-Size – $260</li><li>Large – $300</li></ul></div>
+                <div class="price-card"><div class="badge">Best Value</div><h3>Monthly (3 Months)</h3><ul><li>Compact – $140</li><li>Mid-Size – $175</li><li>Full-Size – $200</li><li>Large – $230</li></ul></div>
+            </div>
+        </section>
+
+        <section class="py-20 text-center">
+            <h2 class="text-5xl accent mb-20 fade-up font-bold">Interior & Exterior</h2>
+            <div class="grid md:grid-cols-3 gap-16">
+                <div class="price-card"><h3>One Time</h3><ul><li>Compact – $70</li><li>Mid-Size – $80</li><li>Full-Size – $90</li><li>Large – $100</li></ul></div>
+                <div class="price-card"><h3>Weekly (4 Weeks)</h3><ul><li>Compact – $275</li><li>Mid-Size – $315</li><li>Full-Size – $355</li><li>Large – $395</li></ul></div>
+                <div class="price-card"><div class="badge">Elite Plan</div><h3>Monthly (3 Months)</h3><ul><li>Compact – $215</li><li>Mid-Size – $235</li><li>Full-Size – $265</li><li>Large – $295</li></ul></div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div id="sizeguidePage" class="page-content hidden-page pt-32 px-10 text-center">
+    <h2 class="text-5xl font-bold accent mb-12">Vehicle Size Guide</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto mb-20">
+        <div class="size-detail-card"><i class="fa-solid fa-car size-icon-display"></i><h3 class="text-2xl font-bold accent mb-4">Compact / Small</h3><p class="text-gray-300 text-sm">Sedans such as Honda Civic, Toyota Corolla, or Hyundai Elantra.</p></div>
+        <div class="size-detail-card"><i class="fa-solid fa-car-side size-icon-display"></i><h3 class="text-2xl font-bold accent mb-4">Mid-Size / CUV</h3><p class="text-gray-300 text-sm">Small SUVs like Honda CR-V, Toyota RAV4, or Mazda CX-5.</p></div>
+        <div class="size-detail-card"><i class="fa-solid fa-truck-pickup size-icon-display"></i><h3 class="text-2xl font-bold accent mb-4">Full-Size / SUV</h3><p class="text-gray-300 text-sm">Large pickups or SUVs like F-150, Chevy Tahoe, or Honda Pilot.</p></div>
+        <div class="size-detail-card"><i class="fa-solid fa-van-shuttle size-icon-display"></i><h3 class="text-2xl font-bold accent mb-4">Large / XL / Van</h3><p class="text-gray-300 text-sm">Vans, Dually Trucks, or XL SUVs like Chevy Suburban.</p></div>
+    </div>
+</div>
+
+<div id="reviewsPage" class="page-content hidden-page px-10">
+    <div class="max-w-5xl mx-auto">
+        <h2 class="text-5xl font-bold accent mb-12 text-center">Client Reviews <span id="modBadge" class="hidden text-xs bg-red-600 text-white px-2 py-1 rounded ml-4 uppercase">Admin</span></h2>
+        
+        <div class="glass p-8 rounded-2xl mb-16 max-w-2xl mx-auto fade-up">
+            <h3 class="text-2xl font-bold accent mb-6">Leave a Review</h3>
+            <div class="space-y-4">
+                <input type="text" id="revName" placeholder="Your Name" required>
+                <div class="flex gap-2 text-2xl" id="starSelector">
+                    <i class="fa-star fa-solid cursor-pointer accent" data-val="1"></i>
+                    <i class="fa-star fa-solid cursor-pointer accent" data-val="2"></i>
+                    <i class="fa-star fa-solid cursor-pointer accent" data-val="3"></i>
+                    <i class="fa-star fa-solid cursor-pointer accent" data-val="4"></i>
+                    <i class="fa-star fa-solid cursor-pointer accent" data-val="5"></i>
+                </div>
+                <textarea id="revText" placeholder="Share your experience..." rows="3" required></textarea>
+                <div class="flex flex-col gap-2">
+                    <label class="text-xs text-gray-500 uppercase font-bold">Upload Photo (Optional)</label>
+                    <input type="file" id="revImage" accept="image/*" class="text-sm">
+                </div>
+                <button onclick="submitReview()" id="submitRevBtn" class="btn-gold w-full">Post Review</button>
+            </div>
+        </div>
+
+        <div id="reviewStats" class="flex justify-center gap-12 mb-12 py-6 border-y border-gray-800 bg-[#050505] rounded-xl">
+            <div class="text-center"><p class="text-xs uppercase text-gray-500 mb-1">Avg Rating</p><span id="avgRatingScore" class="text-3xl font-bold accent">0.0</span></div>
+            <div class="text-center border-l border-gray-800 pl-12"><p class="text-xs uppercase text-gray-500 mb-1">Total</p><span id="totalReviewsCount" class="text-3xl font-bold text-white">0</span></div>
+        </div>
+        <div id="reviewsContainer" class="grid md:grid-cols-2 gap-8"></div>
+    </div>
+</div>
+
+<div id="faqPage" class="page-content hidden-page">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-5xl font-bold accent mb-12">Frequently Asked Questions</h2>
+        <div class="space-y-4" id="faqContainer"></div>
+    </div>
+</div>
+
+<div id="bookingPage" class="page-content hidden-page px-10">
+    <div class="max-w-2xl mx-auto bg-[#0c0c0c] border border-gray-800 p-12 rounded-2xl">
+        <h2 class="text-3xl font-bold accent mb-8 text-center">Configure Booking</h2>
+        <div class="space-y-6">
+            <select id="package-booking">
+                <option value="">Select Service</option>
+                <option value="exterior">Exterior Wash</option>
+                <option value="interior">Interior Wash</option>
+                <option value="combo">Interior & Exterior</option>
+            </select>
+            <select id="plan-booking">
+                <option value="">Select Plan</option>
+                <option value="one">One Time</option>
+                <option value="weekly">Weekly (4 Weeks)</option>
+                <option value="monthly">Monthly (3 Months)</option>
+            </select>
+            <select id="size-booking">
+                <option value="">Vehicle Size</option>
+                <option value="compact">Compact / Small</option>
+                <option value="mid">Mid-Size / CUV</option>
+                <option value="full">Full-Size / SUV / Pickup</option>
+                <option value="large">Large Truck / Van / XL SUV</option>
+            </select>
+            <button onclick="addToCartFromPage()" class="btn-gold w-full">Add to Booking</button>
+        </div>
+    </div>
+</div>
+
+<footer class="py-10 text-center"><p>© 2026 Ride N Shine</p><div class="easter-egg" onclick="handleEasterEgg()">Psst... a clean car is 10% faster. Science! 🧼🚗</div></footer>
+
 <div id="cartPanel">
-  <button id="closeCart">&times;</button>
-  <h3 class="text-2xl font-semibold accent">Your Cart & Booking</h3>
-
-  <div class="card mb-6">
-    <select id="package">
-      <option value="">Select Service</option>
-      <option value="exterior">Exterior Wash</option>
-      <option value="interior">Interior Wash</option>
-      <option value="combo">Interior & Exterior</option>
-    </select>
-    <select id="plan">
-      <option value="">Select Plan</option>
-      <option value="one">One Time</option>
-      <option value="weekly">Weekly</option>
-      <option value="monthly">Monthly</option>
-    </select>
-    <select id="size">
-      <option value="">Vehicle Size</option>
-      <option value="compact">Compact / Small</option>
-      <option value="mid">Mid-Size / CUV</option>
-      <option value="full">Full-Size / SUV / Pickup</option>
-      <option value="large">Large Truck / Van / XL SUV</option>
-    </select>
-    <button id="addCartBtn" class="btn-gold w-full">Add to Cart</button>
-    <div class="mt-4 text-xl text-center">Total: <span id="totalInline" class="accent">$0</span></div>
-  </div>
-
-  <ul id="cartItemsPopup" class="mb-6 space-y-2"></ul>
-
-  <form id="bookingForm" class="space-y-4">
-    <input type="text" id="name" placeholder="Full Name" required>
-    <input type="email" id="email" placeholder="Email Address" required>
-    <input type="text" id="phone" placeholder="Phone Number" required>
-    <button type="submit" class="w-full btn-gold">Submit Booking</button>
-  </form>
-  <div id="success" class="hidden text-green-400 mt-4 text-center">Booking sent successfully!</div>
+    <button class="text-3xl accent mb-4" onclick="toggleCart(false)">&times;</button>
+    <ul id="cartItemsPopup" class="space-y-4 mb-6"></ul>
+    <div class="text-xl font-bold border-t border-gray-800 pt-6 mb-8 flex justify-between"><span>Total:</span><span id="totalInline" class="accent">$0</span></div>
+    <form id="bookingForm" class="space-y-4">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <textarea id="notes" placeholder="Additional Notes"></textarea>
+        <button type="submit" class="w-full btn-gold">Submit Request</button>
+    </form>
 </div>
 
 <script>
+const faqs = [
+    ["What types of vehicles do you detail?", "We provide professional detailing for compact cars, sedans, SUVs, trucks, and luxury automobiles."],
+    ["Do I need an appointment?", "Yes, we operate strictly by appointment to ensure each vehicle receives the highest quality of care."],
+    ["How long does a detailing service take?", "Exterior (30–50 mins), Interior (45–60 mins), and Full Detailing (1–1.5 hours)."],
+    ["Do you come to my location?", "Yes, we are a fully mobile service. We bring our expertise directly to your home or office."],
+    ["Can I customize a package?", "Absolutely. We are happy to tailor our services to meet your specific requirements."],
+    ["Do you offer interior-only or exterior-only services?", "Yes, both services are available as individual options through our booking menu."],
+    ["Do you offer ceramic coating or paint protection?", "We use high-quality waxes and sealants. Inquire about our premium protection options."],
+    ["Are your products safe for all car surfaces?", "We use professional-grade, pH-balanced chemicals safe for all finishes and leathers."],
+    ["How much does a detailing service cost?", "Our services begin at $25. Final pricing is determined by vehicle size and package."],
+    ["Are there extra charges for larger vehicles?", "Yes, pricing scales with size to account for additional time and materials."],
+    ["What forms of payment do you accept?", "We currently accept cash payments only upon completion of the service."],
+    ["Do I need to pay a deposit?", "We require 50% payment prior to the start, with the remaining balance due upon completion."],
+    ["Are there discounts for repeat customers?", "Yes, we offer competitive rates for multiple vehicles and specialized subscription plans."],
+    ["Do I need to wash my car before the appointment?", "No. Our team handles the entire cleaning and restoration process from start to finish."],
+    ["How often should I get my car detailed?", "We recommend a professional detail every 2 weeks to maintain showroom quality."],
+    ["Can detailing remove scratches or odors?", "We can significantly reduce light scratches and neutralize most odors."],
+    ["What if I notice an issue after the service?", "Contact us within 24 hours so we can address any concerns promptly."],
+    ["Do you work in all weather conditions?", "We may suggest rescheduling in the event of heavy rain or extreme weather."],
+    ["What is your cancellation policy?", "We kindly ask for at least 24 hours' notice for any changes to your appointment."],
+    ["Do I need to be present during the detailing?", "No, as long as we have access to the vehicle and keys, we can work while you go about your day."]
+];
+
+function loadFaqs() {
+    const container = document.getElementById('faqContainer');
+    container.innerHTML = faqs.map((f, i) => `
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)"><span>${i+1}. ${f[0]}</span><i class="fa-solid fa-chevron-down"></i></div>
+            <div class="faq-answer">${f[1]}</div>
+        </div>`).join('');
+}
+
 emailjs.init("YOUR_PUBLIC_KEY");
+const API_URL = "https://sheetdb.io/api/v1/ydw9usfl2r5u8";
+let cart = [], isAdmin = false, eggClicks = 0, selectedRating = 5;
+
+// Star Selector Logic
+document.querySelectorAll('#starSelector i').forEach(star => {
+    star.onclick = (e) => {
+        selectedRating = parseInt(e.target.getAttribute('data-val'));
+        document.querySelectorAll('#starSelector i').forEach((s, idx) => {
+            s.classList.toggle('fa-solid', idx < selectedRating);
+            s.classList.toggle('fa-regular', idx >= selectedRating);
+        });
+    };
+});
+
+async function submitReview() {
+    const name = document.getElementById('revName').value;
+    const text = document.getElementById('revText').value;
+    const file = document.getElementById('revImage').files[0];
+    const btn = document.getElementById('submitRevBtn');
+    if(!name || !text) return alert("Missing info.");
+    
+    btn.innerText = "Posting..."; btn.disabled = true;
+    let base64 = "";
+    if(file) {
+        base64 = await new Promise(r => { 
+            const reader = new FileReader(); reader.onload = () => r(reader.result); reader.readAsDataURL(file); 
+        });
+    }
+
+    try {
+        await fetch(API_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ data: [{ id: Date.now(), name, rating: selectedRating, text, image: base64, date: new Date().toLocaleDateString() }] })
+        });
+        confetti({ particleCount: 150, spread: 100 });
+        document.getElementById('revName').value = ''; document.getElementById('revText').value = ''; document.getElementById('revImage').value = '';
+        renderReviews();
+    } catch(e) { alert("Error"); }
+    finally { btn.innerText = "Post Review"; btn.disabled = false; }
+}
+
+async function deleteReview(id) {
+    if(!confirm("Delete?")) return;
+    await fetch(`${API_URL}/id/${id}`, { method: 'DELETE' });
+    renderReviews();
+}
+
+function handleEasterEgg() {
+    eggClicks++;
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.9 }, colors: ['#d6b07d', '#ffffff'] });
+    if (eggClicks === 5) {
+        if (prompt("Admin Code:") === "wearecarslayers6711") {
+            isAdmin = true; document.body.classList.add('admin-mode');
+            document.getElementById('modBadge').classList.remove('hidden'); renderReviews();
+        } else { eggClicks = 0; }
+    }
+}
+
+function showPage(p) {
+    document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden-page'));
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-tab'));
+    document.getElementById(p + 'Page').classList.remove('hidden-page');
+    document.getElementById('nav-' + p).classList.add('active-tab');
+    window.scrollTo(0,0); triggerAnimations();
+    if(p === 'reviews') renderReviews();
+}
+
+function triggerAnimations() {
+    const obs = new IntersectionObserver((ents) => { ents.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); }); }, {threshold: 0.15});
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+}
+
+function toggleFaq(el) {
+    const item = el.parentElement, ans = item.querySelector('.faq-answer');
+    const act = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('active'); i.querySelector('.faq-answer').style.maxHeight = null; });
+    if (!act) { item.classList.add('active'); ans.style.maxHeight = ans.scrollHeight + "px"; }
+}
+
+function toggleCart(o) { document.getElementById('cartPanel').style.transform = o ? 'translateX(0)' : 'translateX(100%)'; }
+
+async function renderReviews() {
+    const container = document.getElementById('reviewsContainer');
+    try {
+        const res = await fetch(API_URL); const data = await res.json();
+        container.innerHTML = ''; let t = 0;
+        data.forEach(r => {
+            t += parseInt(r.rating);
+            const imgTag = r.image ? `<img src="${r.image}" class="w-full h-48 object-cover rounded-xl mt-4 border border-gray-800">` : '';
+            container.innerHTML += `<div class="review-card fade-up show">${isAdmin ? `<button class="delete-btn" onclick="deleteReview('${r.id}')">Delete</button>` : ''}<div class="flex justify-between mb-4"><span class="font-bold accent">${r.name}</span><span class="text-xs text-gray-600">${r.date}</span></div><div class="text-[#d6b07d] mb-3">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div><p class="text-gray-300 italic">"${r.text}"</p>${imgTag}</div>`;
+        });
+        document.getElementById('totalReviewsCount').innerText = data.length;
+        document.getElementById('avgRatingScore').innerText = data.length ? (t / data.length).toFixed(1) : "0.0";
+    } catch(e) {}
+}
 
 const prices = {
-  exterior: { one:{compact:25,mid:30,full:35,large:40}, weekly:{compact:95,mid:110,full:125,large:140}, monthly:{compact:70,mid:85,full:100,large:120} },
-  interior: { one:{compact:50,mid:60,full:70,large:80}, weekly:{compact:180,mid:220,full:260,large:300}, monthly:{compact:140,mid:175,full:200,large:230} },
-  combo: { one:{compact:70,mid:80,full:90,large:100}, weekly:{compact:275,mid:315,full:355,large:395}, monthly:{compact:215,mid:235,full:265,large:295} }
+    exterior: { one: { compact: 25, mid: 30, full: 35, large: 40 }, weekly: { compact: 95, mid: 110, full: 125, large: 140 }, monthly: { compact: 70, mid: 85, full: 100, large: 120 } },
+    interior: { one: { compact: 50, mid: 60, full: 70, large: 80 }, weekly: { compact: 180, mid: 220, full: 260, large: 300 }, monthly: { compact: 140, mid: 175, full: 200, large: 230 } },
+    combo: { one: { compact: 70, mid: 80, full: 90, large: 100 }, weekly: { compact: 275, mid: 315, full: 355, large: 395 }, monthly: { compact: 215, mid: 235, full: 265, large: 295 } }
 };
 
-let cart = [];
-let total = 0;
+function addToCartFromPage() {
+    const pack = document.getElementById('package-booking').value;
+    const plan = document.getElementById('plan-booking').value;
+    const size = document.getElementById('size-booking').value;
+    if(!pack || !plan || !size) return alert("Please select all options.");
+    cart.push({ pack, plan, size, price: prices[pack][plan][size] }); 
+    updateCart(); toggleCart(true);
+}
 
-document.getElementById('addCartBtn').addEventListener('click', ()=>{
-  const pkg=document.getElementById('package').value;
-  const plan=document.getElementById('plan').value;
-  const size=document.getElementById('size').value;
-  if(!pkg||!plan||!size) return alert("Select all options");
-  const price=prices[pkg][plan][size];
-  cart.push({pkg,plan,size,price});
-  total+=price;
-  document.getElementById('totalInline').innerText=`$${total}`;
-  const li=document.createElement('li');
-  li.textContent=`${pkg} - ${plan} - ${size}: $${price}`;
-  li.className="text-gray-300";
-  document.getElementById('cartItemsPopup').appendChild(li);
-});
+function updateCart() {
+    const l = document.getElementById('cartItemsPopup'); let t = 0; l.innerHTML = '';
+    cart.forEach((i, x) => { t += i.price; l.innerHTML += `<li class="flex justify-between items-center bg-[#1a1a1a] p-4 rounded-lg"><div><p class="font-bold accent uppercase text-sm">${i.pack} (${i.plan})</p><p class="text-xs text-gray-500">${i.size}</p></div><div class="flex items-center gap-4"><span>$${i.price}</span><button onclick="cart.splice(${x},1);updateCart();" class="text-red-500 text-xs">Remove</button></div></li>`; });
+    document.getElementById('totalInline').innerText = `$${t}`;
+}
 
-document.getElementById('cartTabIcon').addEventListener('click', ()=>document.getElementById('cartPanel').style.transform='translateX(0)');
-document.getElementById('closeCart').addEventListener('click', ()=>document.getElementById('cartPanel').style.transform='translateX(100%)');
-
-document.getElementById("bookingForm").addEventListener("submit",function(e){
-  e.preventDefault();
-  if(cart.length===0) return alert("Add a service to cart first.");
-  const templateParams={
-    name:document.getElementById('name').value,
-    email:document.getElementById('email').value,
-    phone:document.getElementById('phone').value,
-    services:JSON.stringify(cart),
-    total:total
-  };
-  emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",templateParams)
-    .then(()=>{
-      document.getElementById("success").classList.remove("hidden");
-      cart=[]; total=0;
-      document.getElementById('cartItemsPopup').innerHTML='';
-      document.getElementById('totalInline').innerText="$0";
-      this.reset();
-    })
-    .catch(()=>alert("Failed to send booking."));
-});
-
-const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');}})},{threshold:0.2});
-document.querySelectorAll('.fade-up').forEach(el=>fadeObserver.observe(el));
+document.getElementById('bookingForm').onsubmit = function(e) {
+    e.preventDefault(); if(cart.length === 0) return alert("Empty.");
+    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", { from_name: document.getElementById('name').value, items: cart.map(i => `${i.pack} ${i.plan}: $${i.price}`).join(", "), total: document.getElementById('totalInline').innerText })
+        .then(() => { cart = []; updateCart(); toggleCart(false); alert("Sent!"); });
+};
+window.onload = () => { triggerAnimations(); renderReviews(); loadFaqs(); };
 </script>
 </body>
 </html>
